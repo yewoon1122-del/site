@@ -346,7 +346,7 @@ const NM={'men-1':'코듀로이 플리스 후드 집업','men-2':'웨이브 롱�
 const L=(dir,files,label)=>files.map((f,i)=>({src:I(dir+'/'+f),label:label+' '+n2(i+1)}));
 const BD=[{"t": "01.gif", "d": "01_detail.jpg"}, {"t": "02.gif", "d": "02_detail.jpg"}, {"t": "03.jpg", "d": "03_detail.jpg"}, {"t": "04.gif", "d": "04_detail.jpg"}, {"t": "05.jpg", "d": "05_detail.jpg"}, {"t": "06.jpg", "d": "06_detail.jpg"}, {"t": "07.jpg", "d": "07_detail.jpg"}, {"t": "08.jpg", "d": "08_detail.jpg"}, {"t": "09.jpg", "d": "09_detail.jpg"}];
 const DATA={
-  detail:CATS.map((c,ci)=>({name:c,items:mk(2,i=>{const NN='0'+(i+1),k=KEYS[ci]+'-'+(i+1),b=`detail/${KEYS[ci]}/detail/${NN}/`;return {thumb:I(b+'S_0.jpg'),detail:I(b),nn:NN,label:NM[k]||(c+' '+(i+1))}}),retouch:mk(2,i=>{const b=`detail/${KEYS[ci]}/swipe/${KEYS[ci]==='bag'?'':'0'}${i+1}_`;return {after:I(b+'a.jpg'),before:I(b+'b.jpg'),label:c+' '+(i+1)}})})),
+  detail:CATS.map((c,ci)=>({name:c,items:mk(2,i=>{const NN='0'+(i+1),k=KEYS[ci]+'-'+(i+1),b=`detail/${KEYS[ci]}/detail/${NN}/`;return {thumb:I(b+'S_0.jpg'),detail:I(b),nn:NN,label:NM[k]||(c+' '+(i+1))}}),retouch:mk(2,i=>{const b=`detail/${KEYS[ci]}/swipe/${KEYS[ci]==='bag'?'':'0'}${i+1}_`;const b2=b.replace('/swipe/','/detail/swipe/');return {after:I(b+'a.jpg'),before:I(b+'b.jpg'),afterFb:I(b2+'a.jpg'),beforeFb:I(b2+'b.jpg'),label:c+' '+(i+1)}})})),
   bannerDetail:BD.map((b,i)=>({src:I('banner/detail/'+b.t),detail:I('banner/detail/'+b.d),label:'Banner '+n2(i+1)})),
   bannerPlain:L('banner/none',["01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg", "06.jpg", "07.jpg", "08.jpg", "09.jpg", "10.gif", "11.jpg", "12.jpg"],'Banner'),
   bannerSeries:L('banner/series',["01.jpg", "02.jpg", "03.jpg"],'Series'),
@@ -366,6 +366,7 @@ const collage=x=>{const a=COLL[x.id]();return im(a.length?a[0]:'',x.label)+(a.le
 const $=s=>document.querySelector(s),app=$('#app'),pv=$('#pv');
 const ERR="this.replaceWith(Object.assign(document.createElement('div'),{className:'ph',textContent:this.alt}))";
 const thumbImg=o=>`<img src="${o.thumb}" alt="${o.label}" loading="lazy" data-fb="${o.detail}1_outfit.jpg" onerror="if(this.dataset.fb){this.src=this.dataset.fb;this.removeAttribute('data-fb')}else{${ERR}}">`;
+const imfb=(src,l,fb)=>`<img src="${src}" alt="${l}" loading="lazy" data-fb="${fb}" onerror="if(this.dataset.fb){this.src=this.dataset.fb;this.removeAttribute('data-fb')}else{${ERR}}">`;
 const im=(src,l)=>src?`<img src="${src}" alt="${l||''}" loading="lazy" onerror="${ERR}">`:`<div class="ph">${l||'IMAGE'}</div>`;
 const go=h=>{if(location.hash.slice(1)!==h)location.hash=h};
 const S=id=>SECTIONS.find(s=>s.id===id);
@@ -510,7 +511,7 @@ const V={
   <div class="tabs">${DATA.detail.map((c,i)=>`<button class="tab ${i===tab?'on':''}" onclick="setTab(${i})">${c.name}</button>`).join('')}</div>
   <div class="grid narrow">${cat.items.map((o,j)=>`<div><button class="card ar-th" onclick="OPEN('d',${tab},${j})">${thumbImg(o)}</button></div>`).join('')}</div>
   <h2>보정본 + 원본</h2><p class="note">swipe →</p>
-  <div class="grid narrow rt1">${cat.retouch.map(r=>`<div class="card ar-th"><div class="sw"><div>${im(r.after,r.label+' 보정본')}</div><div>${im(r.before,r.label+' 원본')}</div></div><span class="dots"><i class="on"></i><i></i></span></div>`).join('')}</div></div>`},
+  <div class="grid narrow rt1">${cat.retouch.map(r=>`<div class="card ar-th"><div class="sw"><div>${imfb(r.after,r.label+' 보정본',r.afterFb)}</div><div>${imfb(r.before,r.label+' 원본',r.beforeFb)}</div></div><span class="dots"><i class="on"></i><i></i></span></div>`).join('')}</div></div>`},
   banner(){const g=(arr,fn)=>`<div class="grid bn3 m3 nat">${arr.map(fn).join('')}</div>`,pl=b=>`<button class="card" onclick="OPENS('${b.src}','${b.label}')">${im(b.src,b.label)}</button>`;
   return `${head('banner')}
   <h2 style="margin-top:0">시리즈</h2>
