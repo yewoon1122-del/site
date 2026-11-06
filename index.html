@@ -312,6 +312,20 @@ body.home .dock{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);ba
 .proj{display:flex;align-items:center;gap:22px;margin:110px 0 8px;font-size:12px;letter-spacing:.2em;color:var(--mute)}
 .proj:before,.proj:after{content:"";flex:1;height:1px;background:var(--line)}
 @media(max-width:700px){.proj{margin:80px 0 4px}.cr.home .ko{font-size:9px}.cr.home .en{font-size:6px}}
+
+/* ===== 왼쪽 상단 장식: 파랑(원형, 회전) 위 / 분홍 아래 ===== */
+.deco{position:absolute;left:28px;top:calc(env(safe-area-inset-top,0px) + 60px);width:240px;z-index:200;pointer-events:none;display:flex;flex-direction:column;align-items:center}
+.deco-c{width:170px;height:170px;display:block;overflow:visible;animation:decoSpin 16s linear infinite;transform-origin:50% 50%}
+.deco-c text{font:500 17px 'Inter',sans-serif;letter-spacing:.06em;fill:#3fd3e6;filter:drop-shadow(0 0 4px rgba(63,211,230,.55))}
+.deco-p{position:relative;width:100%;height:150px;margin-top:6px;font:500 19px 'Inter',sans-serif;letter-spacing:.12em;color:#f08fc8;text-shadow:0 0 5px rgba(240,143,200,.6);text-transform:uppercase}
+.deco-p span{position:absolute;white-space:nowrap}
+.deco-p .d1{left:18px;top:0;transform:rotate(-14deg)}
+.deco-p .d2{left:96px;top:22px;transform:rotate(10deg)}
+.deco-p .d3{left:112px;top:58px;font-size:22px}
+.deco-p .d4{left:30px;top:78px;transform:rotate(-8deg)}
+.deco-p .d5{left:132px;top:110px;transform:rotate(90deg);transform-origin:left top}
+@keyframes decoSpin{to{transform:rotate(360deg)}}
+@media(max-width:700px){.deco{left:10px;top:calc(env(safe-area-inset-top,0px) + 46px);transform:scale(.38);transform-origin:left top}}
 </style>
 </head>
 <body>
@@ -503,6 +517,10 @@ let tab=0;
 const V={
   home(){return `<div class="stage" id="stage">
   <div class="tl mono">Main</div>
+  <div class="deco" aria-hidden="true">
+    <svg class="deco-c" viewBox="0 0 200 200"><defs><path id="decoC" d="M100,100 m-70,0 a70,70 0 1,1 140,0 a70,70 0 1,1 -140,0"/></defs><text><textPath href="#decoC" textLength="438" lengthAdjust="spacing">YEWON KIM ✦ YEWON KIM ✦ </textPath></text></svg>
+    <div class="deco-p"><span class="d1">VISUAL</span><span class="d2">DESIGN</span><span class="d3">·</span><span class="d4">CREATIVE</span><span class="d5">MIND</span></div>
+  </div>
   <div class="tr links mono" onpointerdown="event.stopPropagation()">${PROFILE.links.map(l=>l.copy?`<button onclick="COPY('${l.copy}',this)">${l.label}</button>`:`<a href="${l.href}" target="_blank" rel="noopener">${l.label}</a>`).join('')}</div>
   ${SECTIONS.map((x,i)=>`<div class="it" data-i="${i}"><div class="sl">${x.label}</div><div class="card">${collage(x)}</div></div>`).join('')}
   <div class="ttls">${SECTIONS.map(x=>`<div class="tt"><span>${x.t}</span></div>`).join('')}</div><div class="grain"></div>
