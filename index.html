@@ -317,15 +317,21 @@ body.home .dock{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);ba
 .deco{position:absolute;left:28px;top:calc(env(safe-area-inset-top,0px) + 60px);width:240px;z-index:200;pointer-events:none;display:flex;flex-direction:column;align-items:center}
 .deco-c{width:170px;height:170px;display:block;overflow:visible;animation:decoSpin 16s linear infinite;transform-origin:50% 50%}
 .deco-c text{font:500 17px 'Inter',sans-serif;letter-spacing:.06em;fill:#3fd3e6;filter:drop-shadow(0 0 4px rgba(63,211,230,.55))}
-.deco-p{position:relative;width:100%;height:150px;margin-top:6px;font:500 19px 'Inter',sans-serif;letter-spacing:.12em;color:#f08fc8;text-shadow:0 0 5px rgba(240,143,200,.6);text-transform:uppercase}
+.deco-p{position:relative;width:100%;height:186px;margin-top:6px;font:500 19px 'Inter',sans-serif;letter-spacing:.12em;color:#f08fc8;text-shadow:0 0 5px rgba(240,143,200,.6);text-transform:uppercase}
 .deco-p span{position:absolute;white-space:nowrap}
-.deco-p .d1{left:18px;top:0;transform:rotate(-14deg)}
-.deco-p .d2{left:96px;top:22px;transform:rotate(10deg)}
-.deco-p .d3{left:112px;top:58px;font-size:22px}
-.deco-p .d4{left:30px;top:78px;transform:rotate(-8deg)}
-.deco-p .d5{left:132px;top:110px;transform:rotate(90deg);transform-origin:left top}
+/* 모든 분홍 글자를 파랑 원의 세로 중심선(50%)에 맞춰 배치 */
+.deco-p .d1{right:calc(50% + 6px);top:6px;transform:rotate(-14deg);transform-origin:right center}
+.deco-p .d2{left:calc(50% + 6px);top:6px;transform:rotate(10deg);transform-origin:left center}
+.deco-p .d3{left:50%;top:44px;font-size:22px;transform:translateX(-50%)}
+.deco-p .d4{left:50%;top:76px;transform:translateX(-50%) rotate(-8deg)}
+.deco-p .d5{left:50%;top:116px;writing-mode:vertical-rl;transform:translateX(-50%)}
 @keyframes decoSpin{to{transform:rotate(360deg)}}
-@media(max-width:700px){.deco{left:10px;top:calc(env(safe-area-inset-top,0px) + 46px);transform:scale(.38);transform-origin:left top}}
+/* 모바일: 하단 오른쪽, 왼쪽 분홍 · 오른쪽 파랑 */
+@media(max-width:700px){
+ .deco{left:auto;right:20px;top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 86px);width:auto;flex-direction:row;align-items:center;gap:6px;transform:scale(.3);transform-origin:right bottom}
+ .deco-c{order:2}
+ .deco-p{order:1;width:240px;margin-top:0}
+}
 </style>
 </head>
 <body>
