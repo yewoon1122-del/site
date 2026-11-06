@@ -328,6 +328,11 @@ body.home .dock{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);ba
 }
 /* ===== PC 하위 페이지: 파랑 원을 오른쪽 여백에 고정 (스크롤해도 따라옴) ===== */
 .deco-fx{display:none}
+/* 모바일: 인덱스 5개 항목의 하위 페이지에서만, 오른쪽 상단에 고정(스크롤 시 따라오지 않음) */
+@media(max-width:700px){
+ body.subcat .deco-fx{display:block;position:absolute;z-index:35;pointer-events:none;width:72px;height:72px;top:calc(env(safe-area-inset-top,0px) + 72px);right:16px}
+ body.subcat .deco-fx .deco-c{width:100%;height:100%}
+}
 @media(min-width:1500px){
  body:not(.home) .deco-fx{display:block;position:fixed;z-index:35;pointer-events:none;
   --side:calc(((100vw - 1100px)/2 + 20px)/3);--sz:min(120px,calc(var(--side) - 24px));
@@ -351,7 +356,7 @@ const PROFILE={
   name:'예원',
   intro:['예원은 이커머스와 크리에이티브 프로덕션을 하는 디자이너입니다.','패션 캠페인, 룩북, 프론트엔드 커스텀, AI 비주얼을 만듭니다.'],
   hero:['예원은','이커머스와','크리에이티브','프로덕션을 하는','디자이너입니다.'],
-  links:[{label:'Email',href:'mailto:yewoon1122@gmail.com'}],
+  links:[{label:'Email',mail:'yewoon1122@gmail.com'}],
   mantra:['보기 좋게.','정확하게.','끝까지.','만든다.'],
   resume:[
     {title:'ABOUT',rows:[['소개','여기에 한 줄 소개를 입력하세요.']]},
@@ -474,6 +479,7 @@ function openProd(i,j){
 }
 window.OPEN=(a,i,j)=>{if(a==='d'){openProd(i,j);return}const o=DATA.bannerDetail[i];lb(o.detail,o.label+' — 상세')};
 window.OPENS=(s,l)=>lb(s,l);
+window.MAIL=a=>{if(matchMedia('(hover:hover) and (pointer:fine)').matches){const w=window.open('https://mail.google.com/mail/?view=cm&fs=1&to='+encodeURIComponent(a),'_blank','noopener');if(w)return}location.href='mailto:'+a};
 window.COPY=async(t,el)=>{const o=el.textContent;try{await navigator.clipboard.writeText(t);el.textContent='Copied'}catch(e){el.textContent=t}setTimeout(()=>el.textContent=o,1600)};
 const hover=matchMedia('(hover:hover)').matches;
 window.PV=(id,on)=>{if(!hover)return;if(on&&id!=='resume'){pv.innerHTML=im(COLL[id]()[0],S(id).label);pv.classList.add('on')}else pv.classList.remove('on')};
@@ -534,7 +540,7 @@ const V={
     <text x="65" y="14" transform="rotate(90 65 65)">DESIGN</text>
     <text x="65" y="14" transform="rotate(180 65 65)">CREATIVE</text>
     <text x="65" y="14" transform="rotate(270 65 65)">MIND</text></g></svg>
-  <div class="tr links mono" onpointerdown="event.stopPropagation()">${PROFILE.links.map(l=>l.copy?`<button onclick="COPY('${l.copy}',this)">${l.label}</button>`:`<a href="${l.href}"${l.href.startsWith('mailto:')?'':' target="_blank" rel="noopener"'}>${l.label}</a>`).join('')}</div>
+  <div class="tr links mono" onpointerdown="event.stopPropagation()">${PROFILE.links.map(l=>l.mail?`<button onclick="MAIL('${l.mail}')">${l.label}</button>`:l.copy?`<button onclick="COPY('${l.copy}',this)">${l.label}</button>`:`<a href="${l.href}"${l.href.startsWith('mailto:')?'':' target="_blank" rel="noopener"'}>${l.label}</a>`).join('')}</div>
   ${SECTIONS.map((x,i)=>`<div class="it" data-i="${i}"><div class="sl">${x.label}</div><div class="card">${collage(x)}</div></div>`).join('')}
   <div class="ttls">${SECTIONS.map(x=>`<div class="tt"><span>${x.t}</span></div>`).join('')}</div><div class="grain"></div>
   <div class="cr home mono">${NOTICE}</div><div class="cur mono" id="cur"></div></div>`},
@@ -696,7 +702,7 @@ function render(){
   app.style.animation='none';app.offsetHeight;app.style.animation='';
   app.innerHTML=V[k]()+(k==='home'?'':`<footer class="cr mono">${NOTICE}</footer>`);PV('',0);
   document.querySelectorAll('.dock button').forEach(b=>b.classList.toggle('on',b.dataset.k===(k==='home'?'':k)));
-  document.body.classList.toggle('home',k==='home');
+  document.body.classList.toggle('home',k==='home');document.body.classList.toggle('subcat',SECTIONS.some(x=>x.id===k));
   scrollTo(0,0);
   if(k==='home')initStage();else setupRuler(k);
   bindWsw();
