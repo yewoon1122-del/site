@@ -356,7 +356,7 @@ const PROFILE={
   name:'예원',
   intro:['예원은 이커머스와 크리에이티브 프로덕션을 하는 디자이너입니다.','패션 캠페인, 룩북, 프론트엔드 커스텀, AI 비주얼을 만듭니다.'],
   hero:['예원은','이커머스와','크리에이티브','프로덕션을 하는','디자이너입니다.'],
-  links:[{label:'Email',mail:'yewoon1122@gmail.com'}],
+  links:[{label:'Email',copy:'yewoon1122@gmail.com'}],
   mantra:['보기 좋게.','정확하게.','끝까지.','만든다.'],
   resume:[
     {title:'ABOUT',rows:[['소개','여기에 한 줄 소개를 입력하세요.']]},
@@ -480,6 +480,22 @@ function openProd(i,j){
 window.OPEN=(a,i,j)=>{if(a==='d'){openProd(i,j);return}const o=DATA.bannerDetail[i];lb(o.detail,o.label+' — 상세')};
 window.OPENS=(s,l)=>lb(s,l);
 window.MAIL=a=>{if(matchMedia('(hover:hover) and (pointer:fine)').matches){const w=window.open('https://mail.google.com/mail/?view=cm&fs=1&to='+encodeURIComponent(a),'_blank','noopener');if(w)return}location.href='mailto:'+a};
+/* PC 인덱스: 파랑 원을 분홍 큰 타이틀의 세로 중앙에 맞춤 */
+(function decoAlign(){
+  const d=document.querySelector('.deco');
+  if(d){
+    if(document.body.classList.contains('home')&&innerWidth>700){
+      let best=null,bo=.05;
+      document.querySelectorAll('.tt').forEach(t=>{const o=+getComputedStyle(t).opacity;if(o>bo){bo=o;best=t}});
+      if(best){
+        const r=(best.querySelector('span')||best).getBoundingClientRect(),p=d.offsetParent.getBoundingClientRect();
+        const y=Math.round((r.top+r.bottom)/2-p.top-d.offsetHeight/2)+'px';
+        if(d.style.top!==y)d.style.top=y;
+      }
+    }else if(d.style.top)d.style.top='';
+  }
+  requestAnimationFrame(decoAlign);
+})();
 window.COPY=async(t,el)=>{const o=el.textContent;try{await navigator.clipboard.writeText(t);el.textContent='Copied'}catch(e){el.textContent=t}setTimeout(()=>el.textContent=o,1600)};
 const hover=matchMedia('(hover:hover)').matches;
 window.PV=(id,on)=>{if(!hover)return;if(on&&id!=='resume'){pv.innerHTML=im(COLL[id]()[0],S(id).label);pv.classList.add('on')}else pv.classList.remove('on')};
