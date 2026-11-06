@@ -313,25 +313,18 @@ body.home .dock{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);ba
 .proj:before,.proj:after{content:"";flex:1;height:1px;background:var(--line)}
 @media(max-width:700px){.proj{margin:80px 0 4px}.cr.home .ko{font-size:9px}.cr.home .en{font-size:6px}}
 
-/* ===== 왼쪽 상단 장식: 파랑(원형, 회전) 위 / 분홍 아래 ===== */
-.deco{position:absolute;left:28px;top:calc(env(safe-area-inset-top,0px) + 60px);width:240px;z-index:200;pointer-events:none;display:flex;flex-direction:column;align-items:center}
-.deco-c{width:170px;height:170px;display:block;overflow:visible;animation:decoSpin 16s linear infinite;transform-origin:50% 50%}
+/* ===== 장식: 파랑(원형, 회전) 왼쪽 상단 / 분홍(네모) 오른쪽 하단 ===== */
+.deco{position:absolute;left:28px;top:calc(env(safe-area-inset-top,0px) + 60px);width:240px;z-index:200;pointer-events:none;display:flex;justify-content:center}
+.deco-c{width:153px;height:153px;display:block;overflow:visible;animation:decoSpin 16s linear infinite;transform-origin:50% 50%}
 .deco-c text{font:500 17px 'Inter',sans-serif;letter-spacing:.06em;fill:#3fd3e6;filter:drop-shadow(0 0 4px rgba(63,211,230,.55))}
-.deco-p{position:relative;width:100%;height:186px;margin-top:6px;font:500 19px 'Inter',sans-serif;letter-spacing:.12em;color:#f08fc8;text-shadow:0 0 5px rgba(240,143,200,.6);text-transform:uppercase}
-.deco-p span{position:absolute;white-space:nowrap}
-/* 모든 분홍 글자를 파랑 원의 세로 중심선(50%)에 맞춰 배치 */
-/* 삼각형 구조: 위 MIND(세로) → CREATIVE → · → 아래 VISUAL DESIGN (가장 넓음) */
-.deco-p .d5{left:50%;top:0;writing-mode:vertical-rl;transform:translateX(-50%)}
-.deco-p .d4{left:50%;top:82px;transform:translateX(-50%) rotate(-8deg)}
-.deco-p .d3{left:50%;top:116px;font-size:22px;transform:translateX(-50%)}
-.deco-p .d1{right:calc(50% + 6px);top:150px;transform:rotate(-14deg);transform-origin:right center}
-.deco-p .d2{left:calc(50% + 6px);top:150px;transform:rotate(10deg);transform-origin:left center}
 @keyframes decoSpin{to{transform:rotate(360deg)}}
+/* 분홍 네모: 네 변을 따라 시계방향 VISUAL → DESIGN → CREATIVE → MIND (글자 머리가 바깥쪽) */
+.deco-p{position:absolute;right:34px;bottom:calc(env(safe-area-inset-bottom,0px) + 66px);width:124px;height:124px;z-index:200;pointer-events:none;overflow:visible}
+.deco-p text{font:500 14px 'Inter',sans-serif;letter-spacing:.12em;fill:#f08fc8;filter:drop-shadow(0 0 4px rgba(240,143,200,.6))}
 /* 모바일: 하단 오른쪽, 왼쪽 분홍 · 오른쪽 파랑 */
 @media(max-width:700px){
- .deco{left:auto;right:20px;top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 86px);width:auto;flex-direction:row;align-items:center;gap:6px;transform:scale(.3);transform-origin:right bottom}
- .deco-c{order:2}
- .deco-p{order:1;width:240px;margin-top:0}
+ .deco{left:auto;right:20px;top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 86px);width:153px;transform:scale(.32);transform-origin:right bottom}
+ .deco-p{right:76px;bottom:calc(env(safe-area-inset-bottom,0px) + 88px);transform:scale(.36);transform-origin:right bottom}
 }
 </style>
 </head>
@@ -526,8 +519,12 @@ const V={
   <div class="tl mono">Main</div>
   <div class="deco" aria-hidden="true">
     <svg class="deco-c" viewBox="0 0 200 200"><defs><path id="decoC" d="M100,100 m-70,0 a70,70 0 1,1 140,0 a70,70 0 1,1 -140,0"/></defs><text><textPath href="#decoC" textLength="438" lengthAdjust="spacing">YEWON KIM ✦ YEWON KIM ✦ </textPath></text></svg>
-    <div class="deco-p"><span class="d1">VISUAL</span><span class="d2">DESIGN</span><span class="d3">·</span><span class="d4">CREATIVE</span><span class="d5">MIND</span></div>
   </div>
+  <svg class="deco-p" viewBox="0 0 130 130" aria-hidden="true"><g text-anchor="middle">
+    <text x="65" y="14">VISUAL</text>
+    <text x="65" y="14" transform="rotate(90 65 65)">DESIGN</text>
+    <text x="65" y="14" transform="rotate(180 65 65)">CREATIVE</text>
+    <text x="65" y="14" transform="rotate(270 65 65)">MIND</text></g></svg>
   <div class="tr links mono" onpointerdown="event.stopPropagation()">${PROFILE.links.map(l=>l.copy?`<button onclick="COPY('${l.copy}',this)">${l.label}</button>`:`<a href="${l.href}" target="_blank" rel="noopener">${l.label}</a>`).join('')}</div>
   ${SECTIONS.map((x,i)=>`<div class="it" data-i="${i}"><div class="sl">${x.label}</div><div class="card">${collage(x)}</div></div>`).join('')}
   <div class="ttls">${SECTIONS.map(x=>`<div class="tt"><span>${x.t}</span></div>`).join('')}</div><div class="grain"></div>
