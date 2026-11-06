@@ -320,11 +320,12 @@ body.home .dock{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);ba
 .deco-p{position:relative;width:100%;height:186px;margin-top:6px;font:500 19px 'Inter',sans-serif;letter-spacing:.12em;color:#f08fc8;text-shadow:0 0 5px rgba(240,143,200,.6);text-transform:uppercase}
 .deco-p span{position:absolute;white-space:nowrap}
 /* 모든 분홍 글자를 파랑 원의 세로 중심선(50%)에 맞춰 배치 */
-.deco-p .d1{right:calc(50% + 6px);top:6px;transform:rotate(-14deg);transform-origin:right center}
-.deco-p .d2{left:calc(50% + 6px);top:6px;transform:rotate(10deg);transform-origin:left center}
-.deco-p .d3{left:50%;top:44px;font-size:22px;transform:translateX(-50%)}
-.deco-p .d4{left:50%;top:76px;transform:translateX(-50%) rotate(-8deg)}
-.deco-p .d5{left:50%;top:116px;writing-mode:vertical-rl;transform:translateX(-50%)}
+/* 삼각형 구조: 위 MIND(세로) → CREATIVE → · → 아래 VISUAL DESIGN (가장 넓음) */
+.deco-p .d5{left:50%;top:0;writing-mode:vertical-rl;transform:translateX(-50%)}
+.deco-p .d4{left:50%;top:82px;transform:translateX(-50%) rotate(-8deg)}
+.deco-p .d3{left:50%;top:116px;font-size:22px;transform:translateX(-50%)}
+.deco-p .d1{right:calc(50% + 6px);top:150px;transform:rotate(-14deg);transform-origin:right center}
+.deco-p .d2{left:calc(50% + 6px);top:150px;transform:rotate(10deg);transform-origin:left center}
 @keyframes decoSpin{to{transform:rotate(360deg)}}
 /* 모바일: 하단 오른쪽, 왼쪽 분홍 · 오른쪽 파랑 */
 @media(max-width:700px){
@@ -348,14 +349,14 @@ const PROFILE={
   name:'예원',
   intro:['예원은 이커머스와 크리에이티브 프로덕션을 하는 디자이너입니다.','패션 캠페인, 룩북, 프론트엔드 커스텀, AI 비주얼을 만듭니다.'],
   hero:['예원은','이커머스와','크리에이티브','프로덕션을 하는','디자이너입니다.'],
-  links:[{label:'Email',copy:'your@email.com'}],
+  links:[{label:'Email',copy:'yewoon1122@gmail.com'}],
   mantra:['보기 좋게.','정확하게.','끝까지.','만든다.'],
   resume:[
     {title:'ABOUT',rows:[['소개','여기에 한 줄 소개를 입력하세요.']]},
     {title:'EXPERIENCE',rows:[['20XX–현재','회사명 / 직무'],['20XX–20XX','회사명 / 직무']]},
     {title:'EDUCATION',rows:[['20XX','학교 / 전공']]},
     {title:'SKILLS',rows:[['Design','Photoshop, Illustrator, Figma'],['Dev','HTML, CSS, JS'],['AI','이미지·영상 생성 툴']]},
-    {title:'CONTACT',rows:[['Email','your@email.com']]}
+    {title:'CONTACT',rows:[['Email','yewoon1122@gmail.com']]}
   ]
 };
 const CATS=['남성 캐쥬얼','여성 캐쥬얼','여성 가방','스노우','워크웨어','스포츠'];
