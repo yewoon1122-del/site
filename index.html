@@ -308,6 +308,12 @@ body.home .dock{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);ba
 .rs-sec{padding:44px 0}.rs-sec:first-child{padding-top:24px}.rs-sub{margin-bottom:16px}.rs-p{margin-bottom:12px}.rs-it{padding:15px 0}.rs-it:first-child{padding-top:4px}
 @media(max-width:800px){.rs-sec{padding:30px 0}.rs-sec:first-child{padding-top:20px}.rs-it{padding:12px 0}}
 .lbn{margin-top:90px;padding:28px 0 30px;border-top:1px solid var(--line)}
+/* 클릭한 이미지 하단 설명 (AI · INSTAGRAM · BANNER) */
+.lbd{max-width:720px;margin:26px auto 0;padding:0 16px;text-align:center;word-break:keep-all}
+.lbd b{display:block;font-size:15px;font-weight:600;color:#e6e1e1;letter-spacing:-.01em}
+.lbd p{font-size:13px;line-height:1.75;color:var(--mute);margin-top:6px}
+.lbd+.lbn{margin-top:64px}
+@media(max-width:700px){.lbd{margin-top:20px}.lbd b{font-size:14px}.lbd p{font-size:12.5px}.lbd+.lbn{margin-top:52px}}
 .lb .mn{position:fixed;top:calc(env(safe-area-inset-top,0px) + 20px);left:20px;z-index:41;font:400 11px 'IBM Plex Mono',monospace}
 .proj{display:flex;align-items:center;gap:22px;margin:110px 0 8px;font-size:12px;letter-spacing:.2em;color:var(--mute)}
 .proj:before,.proj:after{content:"";flex:1;height:1px;background:var(--line)}
@@ -404,7 +410,10 @@ let lbOn=false,CAP={};
 fetch('captions.json').then(r=>r.ok?r.json():{}).then(j=>{CAP=j||{}}).catch(()=>{});
 const esc=t=>String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c])).replace(/\n/g,'<br>');
 function showCap(k){const c=CAP[k],el=$('#lbcap');if(c&&(c.title||c.desc)){el.innerHTML=(c.title?`<b>${esc(c.title)}</b>`:'')+(c.desc?`<p>${esc(c.desc)}</p>`:'');el.style.display='block'}else el.style.display='none'}
-function lb(src,l,html){$('#lbin').innerHTML=(html||(src?`<img src="${src}" alt="${l||''}" onerror="${ERR}">`:`<div class="ph">${l||'IMAGE'}</div>`))+`<p class="cr mono lbn">${NOTICE}</p>`;showCap(src);$('#lb').classList.add('on');document.body.style.overflow='hidden';if(!lbOn){lbOn=true;try{history.pushState({lb:1},'')}catch(e){}}}
+const capKey=s=>String(s||'').split('#')[0].split('?')[0].replace(/^.*?images\//,'').replace(/\.(jpe?g|png|gif|webp|mp4|webm|mov)$/i,'').replace(/_detail$/,'');
+const INLINE_CAP=/^(ai|instagram|banner)\//;   // 하단 설명을 보여줄 섹션
+function capHTML(src){const k=capKey(src);if(!INLINE_CAP.test(k))return '';const c=CAP[k];return c&&(c.title||c.desc)?`<div class="lbd">${c.title?`<b>${esc(c.title)}</b>`:''}${c.desc?`<p>${esc(c.desc)}</p>`:''}</div>`:''}
+function lb(src,l,html){const ic=capHTML(src);$('#lbin').innerHTML=(html||(src?`<img src="${src}" alt="${l||''}" onerror="${ERR}">`:`<div class="ph">${l||'IMAGE'}</div>`))+ic+`<p class="cr mono lbn">${NOTICE}</p>`;if(ic)$('#lbcap').style.display='none';else showCap(src);$('#lb').classList.add('on');document.body.style.overflow='hidden';if(!lbOn){lbOn=true;try{history.pushState({lb:1},'')}catch(e){}}}
 function hideLb(){$('#lb').classList.remove('on');document.body.style.overflow='';lbOn=false}
 function closeLb(){if(lbOn&&history.state&&history.state.lb)history.back();else hideLb()}
 window.addEventListener('popstate',()=>{if(lbOn)hideLb()});
@@ -521,7 +530,7 @@ const VEXT=['mp4','webm','mov'];
 const vcand=b=>b.split('|').flatMap(x=>VEXT.map(e=>I(x)+'.'+e));
 function vnx(v){const c=v.dataset.c.split(','),k=+v.dataset.k+1;if(k<c.length){v.dataset.k=k;v.src=c[k];v.load()}else{const r=v.closest('.dc');if(r)r.remove()}}
 const vtag=(b,attr,frag)=>{const c=vcand(b);return `<video src="${c[0]}${frag||''}" data-c="${c.join(',')}" data-k="0" ${attr} onerror="vnx(this)"></video>`};
-window.OPENV=el=>{const v=el.querySelector('video');if(!v)return;const u=(v.currentSrc||v.src).split('#')[0];lb('',' ',`<video src="${u}" controls autoplay playsinline style="max-width:100%;max-height:86vh"></video>`)};
+window.OPENV=el=>{const v=el.querySelector('video');if(!v)return;const u=(v.currentSrc||v.src).split('#')[0];lb(u,' ',`<video src="${u}" controls autoplay playsinline style="max-width:100%;max-height:86vh"></video>`)};
 const videoGrid=(dir,max)=>`<div class="grid vgrid">${Array.from({length:max},(_,i)=>i+1).map(n=>`<button class="card dc vid" style="aspect-ratio:${VIDEO_RATIO}" onclick="OPENV(this)">${vtag(dir+'/'+n2(n)+'|'+dir+'/'+n,'preload="metadata" muted playsinline','#t=0.1')}<span class="play"><svg viewBox="0 0 24 24"><path d="M8.5 5.5v13l11-6.5z"/></svg></span></button>`).join('')}</div>`;
 const loopVid=b=>vtag(b,'autoplay muted loop playsinline preload="auto"');
 const DESC={
