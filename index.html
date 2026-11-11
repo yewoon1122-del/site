@@ -605,7 +605,9 @@ html body.home{
 body.home::before{background:radial-gradient(at 50% 45%,transparent 60%,rgba(0,0,0,.06) 100%)!important}
 
 /* ---- 포스트잇 · 상단바: 화이트 80% ---- */
-.deco-tape{background:rgba(255,255,255,.8)!important}
+.deco-tape{background:rgba(255,255,255,.8)!important;box-shadow:0 2px 6px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.08)}  /* 살짝 그림자 */
+.deco-tape{z-index:203!important}                                     /* PC: 포스트잇이 도장 위로 */
+@media(max-width:700px){body.home .deco-tape{z-index:112!important}}  /* 모바일: 도장 위, 타이틀 아래 */
 .dock, body.home .dock{background:rgba(255,255,255,.8)!important}
 .dock .rc{background:#eeeeea!important}          /* 상단바 현재 아이콘 동그라미 */
 
