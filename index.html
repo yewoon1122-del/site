@@ -611,11 +611,12 @@ body.home::before{background:radial-gradient(at 50% 45%,transparent 60%,rgba(0,0
 
 /* ---- 타이틀 색 ---- */
 :root:root:root:root, html body, html body .lb, html body.home{
-  --title-1:#728f00!important;--title-2:#5d7600!important}   /* 인덱스 타이틀 올리브 */
+  --title-1:#728f00!important;--title-2:#5d7600!important}   /* 기본 타이틀 올리브 */
+html body.home{--title-1:#92be00!important;--title-2:#769c00!important}  /* 인덱스 타이틀: 쨍한 올리브 (B·C 중간) */
 .pk{--title-1:#86a800!important;--title-2:#6e8c00!important}  /* RESUME 타이틀: 조금 더 쨍한 올리브 */
 
 /* ---- 인덱스 도장: 올리브 + 80% ---- */
-body.home .deco{color:#728f00}
+body.home .deco{color:#92be00}                           /* 인덱스 도장 = 인덱스 타이틀 색 */
 .deco .deco-c, body.home .deco-c.stamp{opacity:.8!important}
 
 /* ---- RESUME ABOUT: EXPERIENCE와 같은 크기·색 ---- */
