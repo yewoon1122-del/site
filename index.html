@@ -612,6 +612,9 @@ html body.home{
 :root:root:root:root, html body, html body .lb, html body.home{
   --title-1:#728f00!important;--title-2:#5d7600!important}
 
+/* RESUME 타이틀: 조금 더 쨍한 올리브 */
+.pk{--title-1:#86a800!important;--title-2:#6e8c00!important}
+
 /* 도장 올리브 + 80% */
 body.home .deco{color:#728f00}
 .deco .deco-c, body.home .deco-c.stamp{opacity:.8!important}
@@ -918,17 +921,15 @@ function initStage(){
   const MOB=()=>innerWidth<=700,KS=()=>MOB()?.1:.25,DYf=(p=0)=>MOB()?40*Math.max(0,1-p):36;
   function fit(){
     const H=st.clientHeight,ch0=cds[0].offsetHeight,mx=innerWidth*(MOB()?.95:.92);
+    /* 모든 타이틀을 BANNER(첫 번째) 기준 크기·위치로 통일, 한 줄 표시 */
+    const ct0=H/2-ch0/2+DYf(0),av0=Math.max(40,ct0-58);
+    let base=av0/.7;
+    tts[0].firstChild.textContent=SECTIONS[0].t;tts[0].style.fontSize=base+'px';
+    const w0=tts[0].firstChild.offsetWidth;if(w0>mx)base*=mx/w0;
     tts.forEach((t,i)=>{
-      const sc0=1-KS()*Math.min(Math.min(i,N-1-i),1),ct=H/2-ch0*sc0/2+DYf(i),av=Math.max(40,ct-58);
       const sp=t.firstChild,x=SECTIONS[i];
-      sp.textContent=x.t;let f1=av/.7;t.style.fontSize=f1+'px';
-      const w=sp.offsetWidth;if(w>mx)f1*=mx/w;
-      let fs=f1;
-      if(x.t2){
-        sp.innerHTML=x.t2.map((l,k)=>`<i class="ln l${k}">${l}</i>`).join('');let f2=av/1.65;t.style.fontSize=f2+'px';
-        const w2=sp.offsetWidth;if(w2>mx)f2*=mx/w2;
-        if(f2>f1*1.08)fs=f2;else sp.textContent=x.t;
-      }
+      sp.textContent=x.t;let fs=base;t.style.fontSize=fs+'px';
+      const w=sp.offsetWidth;if(w>mx)fs*=mx/w;   /* 화면보다 넓을 때만 그 타이틀만 줄임 */
       t.style.fontSize=fs+'px';t._fs=fs});
   }
   fit();addEventListener('resize',fit);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
