@@ -593,37 +593,43 @@ body.home .deco{color:#6b7b0f}                         /* 타이틀과 같은 �
 body.home .deco .deco-c > g{filter:url(#stampwear)}    /* 잉크 군데군데 빠짐 */
 
 /* ===================================================================
-   화이트 톤 + 채도 올린 올리브 (2026-11-11)
+   2026-11-11 정리본 — 숫자만 바꾸면 조절돼요
    =================================================================== */
-/* 포스트잇 화이트 80% */
-.deco-tape{background:rgba(255,255,255,.8)!important}
 
-/* 상단바 화이트 80% + 현재 아이콘 동그라미는 배경색 */
-.dock, body.home .dock{background:rgba(255,255,255,.8)!important}
-.dock .rc{background:#ecf3c8!important}
-
-/* 인덱스 배경 흰 막 40% → 60% */
+/* ---- 인덱스 배경: RESUME와 같은 흰 종이 톤 (종이 벗겨짐 효과 유지) ---- */
 html body.home{
+  background-color:#f4f4f2!important;
   background-image:url("images/peel-tl.png"),url("images/peel-bl.png"),
-    linear-gradient(rgba(255,255,255,.6),rgba(255,255,255,.6)),
-    url("images/paper.jpg")!important}
+    linear-gradient(rgba(255,255,255,.61),rgba(255,255,255,.61)),url("images/paper.jpg")!important;
+  background-blend-mode:normal,normal,normal,multiply!important}
+body.home::before{background:radial-gradient(at 50% 45%,transparent 60%,rgba(0,0,0,.06) 100%)!important}
 
-/* 타이틀 올리브 (인덱스 + RESUME 등 전체 공통) */
+/* ---- 포스트잇 · 상단바: 화이트 80% ---- */
+.deco-tape{background:rgba(255,255,255,.8)!important}
+.dock, body.home .dock{background:rgba(255,255,255,.8)!important}
+.dock .rc{background:#eeeeea!important}          /* 상단바 현재 아이콘 동그라미 */
+
+/* ---- 타이틀 색 ---- */
 :root:root:root:root, html body, html body .lb, html body.home{
-  --title-1:#728f00!important;--title-2:#5d7600!important}
+  --title-1:#728f00!important;--title-2:#5d7600!important}   /* 인덱스 타이틀 올리브 */
+.pk{--title-1:#86a800!important;--title-2:#6e8c00!important}  /* RESUME 타이틀: 조금 더 쨍한 올리브 */
 
-/* RESUME 타이틀: 조금 더 쨍한 올리브 */
-.pk{--title-1:#86a800!important;--title-2:#6e8c00!important}
-
-/* 도장 올리브 + 80% */
+/* ---- 인덱스 도장: 올리브 + 80% ---- */
 body.home .deco{color:#728f00}
 .deco .deco-c, body.home .deco-c.stamp{opacity:.8!important}
-/* RESUME ABOUT: 영문 헤드 아주 굵게, 한글 리드 조금 더 굵게 */
-.rs-head{font:800 34px/1.2 Inter,'Noto Sans KR',sans-serif;letter-spacing:-.01em;color:var(--fg);margin-bottom:8px}
-.rs-lead{font-size:24px;font-weight:600;color:var(--fg);margin-bottom:26px;word-break:keep-all}
-@media(max-width:800px){.rs-head{font-size:24px}.rs-lead{font-size:18px;margin-bottom:18px}}
 
-/* RESUME TOOLS 그래프: 본문과 균형 맞게 키움 */
+/* ---- RESUME ABOUT: EXPERIENCE와 같은 크기·색 ---- */
+.rs-head{font:700 26px/1.3 Inter,'Noto Sans KR',sans-serif;letter-spacing:.01em;color:var(--fg);margin-bottom:8px}  /* = EXPERIENCE 항목 제목 */
+.rs-lead{font-size:20px;line-height:1.65;font-weight:600;color:var(--fg);margin-bottom:18px;word-break:keep-all}
+.rs-sec:first-child .rs-p{font-size:20px;line-height:1.65;color:var(--mute)}                                 /* = EXPERIENCE 설명 글 */
+@media(max-width:800px){.rs-head{font-size:20px}.rs-lead,.rs-sec:first-child .rs-p{font-size:16px}}
+
+/* ---- RESUME 마지막: 다른 타이틀(ABOUT·EXPERIENCE)과 같은 크기, 한글 블랙 ---- */
+.rs-end .pk{font-size:clamp(48px,6.2vw,100px);margin-bottom:28px}
+.rs-end .rs-p{color:var(--fg)}
+@media(max-width:800px){.rs-end .pk{font-size:clamp(52px,17vw,100px)}}
+
+/* ---- RESUME TOOLS 그래프: 본문과 균형 맞게 ---- */
 .rs-lv{gap:16px;max-width:780px;margin-top:12px}
 .rs-lv li{grid-template-columns:180px 1fr 60px;gap:20px;font-size:20px}
 .rs-lv li i{height:11px}
