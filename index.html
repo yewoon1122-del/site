@@ -591,6 +591,30 @@ html .lb.dk{
    =================================================================== */
 body.home .deco{color:#6b7b0f}                         /* 타이틀과 같은 진한 올리브 */
 body.home .deco .deco-c > g{filter:url(#stampwear)}    /* 잉크 군데군데 빠짐 */
+
+/* ===================================================================
+   화이트 톤 + 채도 올린 올리브 (2026-11-11)
+   =================================================================== */
+/* 포스트잇 화이트 80% */
+.deco-tape{background:rgba(255,255,255,.8)!important}
+
+/* 상단바 화이트 80% + 현재 아이콘 동그라미는 배경색 */
+.dock, body.home .dock{background:rgba(255,255,255,.8)!important}
+.dock .rc{background:#ecf3c8!important}
+
+/* 인덱스 배경 흰 막 40% → 60% */
+html body.home{
+  background-image:url("images/peel-tl.png"),url("images/peel-bl.png"),
+    linear-gradient(rgba(255,255,255,.6),rgba(255,255,255,.6)),
+    url("images/paper.jpg")!important}
+
+/* 타이틀 올리브 (인덱스 + RESUME 등 전체 공통) */
+:root:root:root:root, html body, html body .lb, html body.home{
+  --title-1:#728f00!important;--title-2:#5d7600!important}
+
+/* 도장 올리브 + 80% */
+body.home .deco{color:#728f00}
+.deco .deco-c, body.home .deco-c.stamp{opacity:.8!important}
 </style>
 </head>
 <body>
