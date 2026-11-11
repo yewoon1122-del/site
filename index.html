@@ -621,6 +621,9 @@ body.home .deco{color:#728f00}
 /* RESUME 마지막: 영문 아주 굵게, 한글 부제 조금 더 굵게 */
 .rs-end .pk{-webkit-text-stroke:.022em #7a9a00}
 .rs-end .rs-end-sub{font-weight:600;color:var(--fg)}
+/* 인덱스 라벨·우표 통통 */
+@keyframes hop{0%{translate:0 0}30%{translate:0 -16px}55%{translate:0 0}72%{translate:0 -6px}88%,100%{translate:0 0}}
+@media(min-width:701px){body.home .deco-label.hop,body.home .deco-post.hop{animation:hop .55s cubic-bezier(.3,.7,.4,1) both}}
 </style>
 </head>
 <body>
@@ -795,18 +798,6 @@ window.MAIL=a=>{if(matchMedia('(hover:hover) and (pointer:fine)').matches){const
           if(lab.style.top!==t){lab.style.top=t;lab.style.bottom='auto'}
         }
       }else if(lab.style.top){lab.style.top='';lab.style.bottom=''}
-      /* PC 인덱스: 스와이프할 때 라벨+우표가 사진을 따라 통통 (모바일과 같은 느낌) */
-      const post=document.querySelector('.deco-post');
-      if(document.body.classList.contains('home')&&innerWidth>700){
-        const cx=innerWidth/2;let cb=null,bd=1e9;
-        document.querySelectorAll('.it .card').forEach(c=>{const r=c.getBoundingClientRect(),dd=Math.abs((r.left+r.right)/2-cx);if(dd<bd){bd=dd;cb=r}});
-        if(cb){
-          if(window.__labW!==innerWidth||window.__labH!==innerHeight){window.__labW=innerWidth;window.__labH=innerHeight;window.__labB=0}
-          if(cb.bottom>(window.__labB||0))window.__labB=cb.bottom;   /* 멈춰 있을 때(가장 큰 상태)의 사진 아래 위치 */
-          const dy=Math.round(cb.bottom-window.__labB)+'px',tr='0 '+dy;
-          if(lab.style.translate!==tr){lab.style.translate=tr;if(post)post.style.translate=tr}
-        }
-      }else if(lab.style.translate){lab.style.translate='';if(post)post.style.translate=''}
     }
   }catch(e){}
   requestAnimationFrame(decoAlign);
@@ -963,7 +954,9 @@ function initStage(){
       const b=o>.02&&d>.02?`blur(${(d*7).toFixed(1)}px)`:'none';if(t._b!==b){t._b=b;t.style.filter=b}});
     paintRuler(rul,clamp(pos));
     const c=Math.round(clamp(pos));
-    if(c!==shown){shown=c;cur.innerHTML=SECTIONS[c].label;const dn=document.getElementById('decoNo');if(dn)dn.textContent=SECTIONS[c].n}
+    if(c!==shown){shown=c;cur.innerHTML=SECTIONS[c].label;const dn=document.getElementById('decoNo');if(dn)dn.textContent=SECTIONS[c].n;
+      /* 섹션이 바뀔 때마다 라벨+우표 통통 */
+      document.querySelectorAll('.deco-label,.deco-post').forEach((el,k)=>{el.classList.remove('hop');void el.offsetWidth;el.style.animationDelay=(k*.06)+'s';el.classList.add('hop')})}
   }
   (function tick(){
     if(!document.body.contains(st))return;
