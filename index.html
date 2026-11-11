@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>무제</title>
 <meta name="robots" content="noindex, nofollow">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Anybody:wdth,wght@50..150,100..900&family=Anton&family=Inter:wght@400;500&family=Noto+Sans+KR:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Anybody:wdth,wght@50..150,100..900&family=Anton&family=Barrio&family=Inter:wght@400;500&family=Noto+Sans+KR:wght@400;500&display=swap">
 <style>
 :root{--bg:#fcfcfc;--fg:#111;--mute:#8f8f8f;--line:#e6e6e6;--card:#f0f0f0;--glass:rgba(252,252,252,.72);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a0a0a;--fg:#ededed;--mute:#7c7c7c;--line:#242424;--card:#161616;--glass:rgba(10,10,10,.72)}}
@@ -347,12 +347,193 @@ body.home .dock{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);ba
   width:var(--sz);height:var(--sz);top:40px;right:calc((var(--side) - var(--sz))/2)}
  body:not(.home) .deco-fx .deco-c{width:100%;height:100%}
 }
+
+
+/* ===================================================================
+   구겨진 종이 질감 (images/paper.jpg)
+   - 인덱스(메인)                 : 쨍한 밝은 올리브 #e5f67b 종이 + 진한 올리브 타이틀 + 그레이블랙 문구
+   - 클릭해서 들어간 페이지        : 흰 종이 + 올리브 타이틀
+   - BANNER·INSTAGRAM·AI IMAGE에서
+     이미지를 한 번 더 클릭했을 때  : 다크 그레이 종이
+   ※ 이 블록 전체를 지우면 원래 블랙 배경으로 돌아갑니다
+   =================================================================== */
+
+/* ---------- 하위 페이지: 흰 종이 (기본값) ---------- */
+:root:root:root:root,html body,html body .lb{
+  --paper:#f4f4f2;
+  --bg:#f4f4f2;--fg:#1c1b19;--mute:#7c7a75;--line:#d9d7d1;--card:#e8e7e3;
+  --glass:rgba(244,244,242,.86);--stage:#f4f4f2;--slide:#e8e7e3;
+  --ink-blue:#2b6a7e;--ink-pink:#c0457f;--rsp:#2c2b28;
+  --title-1:#8fa60c;--title-2:#7d920a;   /* 흰 종이 위 타이틀: 진한 올리브 */
+}
+
+/* ---------- 인덱스(메인): 올리브 종이 ---------- */
+html body.home{
+  --paper:#e5f67b;   /* 올리브: #e9f697보다 채도 30% ↑ */
+  --bg:#e5f67b;--fg:#262624;--mute:#3a3a37;--line:rgba(38,38,36,.25);--card:#d6ea66;
+  --glass:rgba(236,250,160,.78);--stage:#e5f67b;--slide:#d6ea66;
+  --ink-blue:#262624;--ink-pink:#262624;   /* 장식 글자: 그레이블랙 */
+  --title-1:#6b7b0f;--title-2:#5a690b;   /* 올리브 종이 위 타이틀: 진한 올리브 */
+}
+
+/* ---------- 종이 깔기 ---------- */
+html{background:none}  /* body 배경이 화면 전체에 깔리도록 */
+html body,html body.home,html .lb,html .rbar{
+  background-color:var(--paper);
+  background-image:url("images/paper.jpg");
+  background-size:cover;background-position:center;background-attachment:fixed;
+  background-blend-mode:multiply}   /* 종이 주름 × 바탕색 → 올리브 종이 / 흰 종이 */
+/* 올리브 종이: 가장자리만 살짝 바랜 느낌 */
+body.home::before{opacity:1;background:radial-gradient(ellipse at 50% 45%,transparent 60%,rgba(60,70,0,.1) 100%)}
+/* 흰 종이: 주름 그림자를 살짝 밝게 (숫자 .35 ↑ = 더 밝게) */
+html body:not(.home),html .lb,html body:not(.home) .rbar{
+  background-image:linear-gradient(rgba(255,255,255,.35),rgba(255,255,255,.35)),url("images/paper.jpg");
+  background-blend-mode:normal,multiply}
+
+/* ---------- BANNER·INSTAGRAM·AI IMAGE 크게 보기: 다크 그레이 종이 ---------- */
+html .lb.dk{
+  --paper:#4d4b48;   /* 다크 그레이: 숫자 ↑ 밝게 */
+  --bg:#4d4b48;--fg:#f0efeb;--mute:#b5b2ac;--line:#66645f;--card:#58564f;
+  --glass:rgba(70,68,65,.88);--rsp:#e4e2dd;
+  background-color:var(--paper);
+  background-image:url("images/paper.jpg");
+  background-blend-mode:multiply;color:var(--fg)}
+
+/* 기존 줄무늬(스캔라인) · 노이즈 · 비네팅 제거 */
+body.home::after{display:none}
+.grain{background:none}
+
+/* 카드 */
+.card,.it .card,.card.intro{background:var(--card);color:var(--fg)}
+.it .card{box-shadow:0 1px 1px rgba(30,30,20,.1),0 14px 30px -14px rgba(30,30,20,.4)}
+.it .card .bwl{filter:grayscale(1) sepia(.15) contrast(1.3) brightness(.92)}
+
+/* 고정 색상 → 변수로 */
+.desc h4,.lbd b{color:var(--fg)}
+.rs-p{color:var(--rsp,var(--fg))}
+.badge,.dock button.on,.rt{background:var(--fg);color:var(--paper)}
+.dock,body.home .dock{background:var(--glass);box-shadow:0 0 0 1px var(--line),0 8px 22px rgba(0,0,0,.1)}
+.wsw .dots i,.card>.dots i{background:#fff}
+
+/* 장식 텍스트: 인쇄 잉크 (글로우 제거) */
+.deco-c text{fill:var(--ink-blue);filter:none}
+.deco-p text{fill:var(--ink-pink);filter:none}
+
+/* ===================================================================
+   타이틀: Barrio (손으로 오린 듯한 폰트) + 잉크 빠진 빈티지 질감
+   =================================================================== */
+.tt,.pk{font-family:'Barrio','Anton',sans-serif;font-weight:400;font-stretch:normal;font-variation-settings:normal;letter-spacing:.01em;text-transform:uppercase}
+.tt{line-height:.9}
+.tt span,.pk{
+  filter:url(#rough);mix-blend-mode:normal;
+  background:
+   url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='w'><feTurbulence type='fractalNoise' baseFrequency='.6' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 .95  0 0 0 0 .95  0 0 0 0 .94  0 0 0 -3.6 1.2'/></filter><rect width='100%' height='100%' filter='url(%23w)'/></svg>"),
+   linear-gradient(180deg,var(--title-1),var(--title-2));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+/* 인덱스: 잉크 빠진 자리는 밝은 올리브로 */
+body.home .tt span{
+  background:
+   url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='w'><feTurbulence type='fractalNoise' baseFrequency='.6' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 .9  0 0 0 0 .965  0 0 0 0 .48  0 0 0 -3.6 1.2'/></filter><rect width='100%' height='100%' filter='url(%23w)'/></svg>"),
+   linear-gradient(180deg,var(--title-1),var(--title-2));
+  -webkit-background-clip:text;background-clip:text}
+
+/* ===================================================================
+   인덱스: 타이틀 70% (아래 가운데 기준 → 위·양옆으로 같이 축소)
+   =================================================================== */
+body.home .tt span{transform:scale(.7);transform-origin:50% 100%}
+
+/* 인덱스: 타이틀 빼고 나머지 문구 · 돌아가는 원형 글자 모두 그레이블랙 */
+body.home .tl,body.home .tr,body.home .links button,body.home .links a,
+body.home .cur,body.home .cr.home,body.home .hint{color:#262624;opacity:1}
+body.home .deco-c text,body.home .deco-p text{fill:#262624}
+/* 상단 도트 메뉴: 선택된 칸은 그레이블랙 바탕 + 밝은 아이콘 */
+body.home .dock button.on{background:#262624;color:#e5f67b}
+
+/* ===================================================================
+   인덱스: 왼쪽 위·아래 종이가 하얗게 벗겨진 듯한 희끗희끗 효과
+   (images/peel-tl.png, images/peel-bl.png)
+   =================================================================== */
+html body.home{
+  background-image:
+    url("images/peel-tl.png"),
+    url("images/peel-bl.png"),
+    url("images/paper.jpg");
+  background-repeat:no-repeat,no-repeat,no-repeat;
+  background-position:left top,left bottom,center;
+  background-size:auto 52vh,auto 52vh,cover;   /* 벗겨진 영역 크기 (화면 높이의 52%) */
+  background-blend-mode:normal,normal,multiply}
+/* 모바일: 벗겨진 영역 조금 작게 */
+@media(max-width:700px){html body.home{background-size:auto 36vh,auto 36vh,cover}}
+
+/* ===================================================================
+   종이용 장식: A 고무 도장(왼쪽 위) · B 우표(오른쪽 아래)
+                C 마스킹 테이프(오른쪽 위) · D 아카이브 라벨(왼쪽 아래, 번호 = 현재 항목)
+   =================================================================== */
+.deco,.deco-fx,.deco-p,.deco-label{color:#262624}
+.deco-c{animation:none!important}                     /* 회전 멈춤 */
+.deco-c text,.deco-p text,.deco-label text{fill:currentColor!important;filter:none}
+.deco-c text.st-ring{font:700 17px 'Courier New',monospace;letter-spacing:2px}
+svg text.st-yw{font:400 30px 'Barrio','Anton',sans-serif;letter-spacing:0}
+svg text.st-sm{font:700 10px 'Courier New',monospace;letter-spacing:1.5px}
+/* A. 고무 도장 */
+.deco .deco-c{width:170px;height:170px}
+/* B. 우표 */
+.deco-p.deco-post{width:92px;height:110px;right:40px;bottom:calc(env(safe-area-inset-bottom,0px) + 74px);overflow:visible;filter:drop-shadow(0 3px 4px rgba(40,40,0,.22))}
+@media(min-width:701px){.deco-p.deco-post{width:92px;height:110px;right:40px;bottom:calc(env(safe-area-inset-bottom,0px) + 74px)}}
+/* C. 마스킹 테이프 */
+.deco-tape{position:absolute;right:40px;top:calc(env(safe-area-inset-top,0px) + 66px);z-index:200;pointer-events:none;transform:rotate(4deg);
+  background:rgba(247,243,220,.8);padding:11px 24px;font:700 13px/1.45 'Courier New',monospace;letter-spacing:.12em;color:#262624;box-shadow:0 2px 6px rgba(40,40,0,.15);
+  clip-path:polygon(2% 0,6% 6%,10% 0,98% 3%,100% 50%,97% 100%,92% 94%,88% 100%,0 97%,3% 50%)}
+/* D. 아카이브 라벨 */
+.deco-label{position:absolute;left:36px;bottom:calc(env(safe-area-inset-bottom,0px) + 92px);width:200px;height:114px;z-index:200;pointer-events:none;transform:rotate(-2deg)}
+/* 화면이 좁으면 테이프·라벨 숨김 (겹침 방지) */
+@media(max-width:1100px){.deco-tape{display:none}}
+@media(max-width:700px){
+ .deco-label{display:none}
+ .deco .deco-c{width:153px;height:153px}
+ .deco-p.deco-post{right:92px;bottom:calc(env(safe-area-inset-bottom,0px) + 92px);transform:scale(.5);transform-origin:right bottom}
+}
+
+/* ===================================================================
+   장식 재배치
+   - 마스킹 테이프 → 왼쪽 위, 도장 오른쪽 아래에 깔리게 (도장이 위)
+   - 아카이브 라벨 → 오른쪽 아래, 이미지 모서리에 겹치게 (우표가 그 위)
+   =================================================================== */
+.deco{z-index:202}                                   /* 도장이 맨 위 */
+.deco-tape{right:auto;left:150px;top:calc(env(safe-area-inset-top,0px) + 190px);z-index:201;transform:rotate(-7deg)}
+.deco-label{left:auto;right:34px;bottom:calc(env(safe-area-inset-bottom,0px) + 96px);z-index:201;transform:rotate(-3deg);filter:drop-shadow(0 3px 5px rgba(30,30,0,.25))}
+.deco-label rect:first-of-type{fill:#f5f2e6}         /* 라벨 종이 바탕 (사진 위에서도 읽히게) */
+.deco-p.deco-post{z-index:202}
+@media(min-width:701px){.deco-p.deco-post{right:236px;bottom:calc(env(safe-area-inset-bottom,0px) + 70px)}}
+
+/* ===================================================================
+   모바일 인덱스: PC와 같은 구성으로 장식 배치
+   - 왼쪽 위: 도장 + 테이프 (타이틀 위 빈 공간)
+   - 오른쪽 아래: 아카이브 라벨 + 우표 (이미지 모서리에 겹치게)
+   =================================================================== */
+@media(max-width:700px){
+ .deco{left:14px;right:auto;top:calc(env(safe-area-inset-top,0px) + 62px);bottom:auto;width:auto;transform:none;display:block}
+ .deco .deco-c{width:96px;height:96px}
+ .deco-tape{display:block;left:84px;top:calc(env(safe-area-inset-top,0px) + 118px);right:auto;padding:6px 14px;font-size:9px;transform:rotate(-7deg)}
+ /* 세로 위치는 JS가 사진 바로 아래로 자동 계산 */
+ .deco-label{display:block;left:auto;right:14px;width:132px;height:76px;transform:rotate(-8deg)}
+ .deco-p.deco-post{right:140px;width:60px;height:72px;transform:rotate(-4deg)}
+}
+
+/* ===================================================================
+   하위 페이지 도장: PC에서도 오른쪽 위에 표시 + RESUME 올리브 색
+   =================================================================== */
+body:not(.home) .deco-fx{color:#8fa60c}                       /* RESUME 타이틀과 같은 올리브 */
+@media(min-width:701px) and (max-width:1499px){
+ body:not(.home) .deco-fx{display:block;position:fixed;z-index:35;pointer-events:none;width:104px;height:104px;top:36px;right:36px}
+ body:not(.home) .deco-fx .deco-c{width:100%;height:100%}
+}
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="rough" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.2"/></filter></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="ink" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" result="d"/><feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="1" seed="9" result="h"/><feColorMatrix in="h" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.8 1.6" result="hm"/><feComposite in="d" in2="hm" operator="in"/></filter><filter id="rough" x="-2%" y="-2%" width="104%" height="104%"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3.2"/></filter></svg>
 <main id="app"></main>
-<div class="deco-fx" aria-hidden="true"><svg class="deco-c" viewBox="0 0 200 200"><defs><path id="decoC2" d="M100,100 m-70,0 a70,70 0 1,1 140,0 a70,70 0 1,1 -140,0"/></defs><text><textPath href="#decoC2" textLength="438" lengthAdjust="spacing">YEWON KIM ✦ YEWON KIM ✦ </textPath></text></svg></div>
+<div class="deco-fx" aria-hidden="true"><svg class="deco-c stamp" viewBox="0 0 200 200"><g transform="rotate(-12 100 100)" filter="url(#ink)"><g fill="none" stroke="currentColor"><circle cx="100" cy="100" r="92" stroke-width="5"/><circle cx="100" cy="100" r="82" stroke-width="1.6"/><circle cx="100" cy="100" r="50" stroke-width="1.6"/></g><defs><path id="decoC2" d="M100,100 m-66,0 a66,66 0 1,1 132,0 a66,66 0 1,1 -132,0"/></defs><text class="st-ring"><textPath href="#decoC2" textLength="405" lengthAdjust="spacing">YEWON KIM ✦ PORTFOLIO ✦ 2026 ✦ </textPath></text><text class="st-yw" x="100" y="97" text-anchor="middle">YW</text><text class="st-sm" x="100" y="119" text-anchor="middle">SEOUL · KR</text></g></svg></div>
 <div class="pv" id="pv"></div>
 <nav class="dock" id="dock"></nav>
 <div class="lb" id="lb"><button class="mn mono" onclick="closeLb()" aria-label="뒤로">← Back</button><button class="x" onclick="closeLb()" aria-label="닫기">CLOSE</button><div class="in" id="lbin"></div><div class="lbcap" id="lbcap"></div></div>
@@ -388,15 +569,16 @@ const DATA={
   bannerSeries:L('banner/series',["01.jpg", "02.jpg", "03.jpg"],'Series'),
   pop:L('pop',["01.jpg", "02.jpg"],'POP')
 };
+/* 인덱스 순서 (왼쪽 → 오른쪽). img = images/index/ 안의 대표 이미지 번호 */
 const SECTIONS=[
-  {id:'detail',t:'DETAIL',n:'01',label:'썸네일 + 상세',c:''},
-  {id:'ai',t:'AI IMAGE',t2:['AI','IMAGE'],n:'02',label:'AI Image',c:''},
-  {id:'insta',t:'INSTAGRAM',t2:['INSTA','GRAM'],n:'03',label:'Instagram',c:''},
-  {id:'banner',t:'BANNER',n:'04',label:'모바일 배너',c:''},
-  {id:'resume',t:'RESUME',n:'05',label:'이력서',c:''}
+  {id:'banner',t:'BANNER',n:'01',label:'모바일 배너',c:'',img:4},
+  {id:'insta',t:'INSTAGRAM',t2:['INSTA','GRAM'],n:'02',label:'Instagram',c:'',img:3},
+  {id:'ai',t:'AI IMAGE',t2:['AI','IMAGE'],n:'03',label:'AI Image',c:'',img:2},
+  {id:'detail',t:'DETAIL',n:'04',label:'썸네일 + 상세',c:'',img:1},
+  {id:'resume',t:'RESUME',n:'05',label:'이력서',c:'',img:5}
 ];
 const COLL={detail:()=>[DATA.detail[0].items[0].thumb,DATA.detail[0].items[1].thumb,DATA.detail[1].items[0].thumb],banner:()=>DATA.bannerSeries.slice(0,1).map(o=>o.src),insta:()=>[I('instagram/01.jpg')],pop:()=>DATA.pop.slice(0,3).map(o=>o.src),ai:()=>[I('ai/26FW/01.jpg')],resume:()=>[I('resume/1.jpg')]};
-SECTIONS.forEach((x,i)=>{COLL[x.id]=()=>[I('index/'+(i+1)+'.jpg')]});
+SECTIONS.forEach(x=>{COLL[x.id]=()=>[I('index/'+x.img+'.jpg')]});
 const collage=x=>{const a=COLL[x.id]();return im(a.length?a[0]:'',x.label)+(a.length?`<img class="bwl" src="${a[0]}" alt="" decoding="async" onerror="this.remove()">`:'')};
 /* ===== 렌더링 ===== */
 const $=s=>document.querySelector(s),app=$('#app'),pv=$('#pv');
@@ -413,7 +595,7 @@ function showCap(k){const c=CAP[k],el=$('#lbcap');if(c&&(c.title||c.desc)){el.in
 const capKey=s=>String(s||'').split('#')[0].split('?')[0].replace(/^.*?images\//,'').replace(/\.(jpe?g|png|gif|webp|mp4|webm|mov)$/i,'').replace(/_detail$/,'');
 const INLINE_CAP=/^(ai|instagram|banner)\//;   // 하단 설명을 보여줄 섹션
 function capHTML(src){const k=capKey(src);if(!INLINE_CAP.test(k))return '';const c=CAP[k];return c&&(c.title||c.desc)?`<div class="lbd">${c.title?`<b>${esc(c.title)}</b>`:''}${c.desc?`<p>${esc(c.desc)}</p>`:''}</div>`:''}
-function lb(src,l,html){const ic=capHTML(src);$('#lbin').innerHTML=(html||(src?`<img src="${src}" alt="${l||''}" onerror="${ERR}">`:`<div class="ph">${l||'IMAGE'}</div>`))+ic+`<p class="cr mono lbn">${NOTICE}</p>`;if(ic)$('#lbcap').style.display='none';else showCap(src);$('#lb').classList.add('on');document.body.style.overflow='hidden';if(!lbOn){lbOn=true;try{history.pushState({lb:1},'')}catch(e){}}}
+function lb(src,l,html){const ic=capHTML(src);$('#lbin').innerHTML=(html||(src?`<img src="${src}" alt="${l||''}" onerror="${ERR}">`:`<div class="ph">${l||'IMAGE'}</div>`))+ic+`<p class="cr mono lbn">${NOTICE}</p>`;if(ic)$('#lbcap').style.display='none';else showCap(src);$('#lb').classList.toggle('dk',['banner','insta','ai'].includes(location.hash.slice(1).split('/')[0]));$('#lb').classList.add('on');document.body.style.overflow='hidden';if(!lbOn){lbOn=true;try{history.pushState({lb:1},'')}catch(e){}}}
 function hideLb(){$('#lb').classList.remove('on');document.body.style.overflow='';lbOn=false}
 function closeLb(){if(lbOn&&history.state&&history.state.lb)history.back();else hideLb()}
 window.addEventListener('popstate',()=>{if(lbOn)hideLb()});
@@ -505,6 +687,23 @@ window.MAIL=a=>{if(matchMedia('(hover:hover) and (pointer:fine)').matches){const
       }
     }else if(d.style.top)d.style.top='';
   }
+  /* 모바일 인덱스: 아카이브 라벨을 사진 바로 아래로 (우표는 CSS 위치 그대로) */
+  try{
+    const lab=document.querySelector('.deco-label');
+    if(lab){
+      if(document.body.classList.contains('home')&&innerWidth<=700&&lab.parentElement){
+        const pr=lab.parentElement.getBoundingClientRect(),cx=innerWidth/2,lh=parseFloat(getComputedStyle(lab).height)||76;
+        let cb=null,bd=1e9;
+        document.querySelectorAll('.it .card').forEach(c=>{const r=c.getBoundingClientRect(),dd=Math.abs((r.left+r.right)/2-cx);if(dd<bd){bd=dd;cb=r}});
+        const cr=document.querySelector('.cr.home'),crTop=cr?cr.getBoundingClientRect().top:innerHeight;
+        if(cb){
+          const LIFT=0;   /* 숫자 ↑ = 라벨이 더 위로 */
+          const top=Math.min(cb.bottom+2-LIFT,crTop-lh-24)-pr.top,t=Math.round(top)+'px';
+          if(lab.style.top!==t){lab.style.top=t;lab.style.bottom='auto'}
+        }
+      }else if(lab.style.top){lab.style.top='';lab.style.bottom=''}
+    }
+  }catch(e){}
   requestAnimationFrame(decoAlign);
 })();
 window.COPY=async(t,el)=>{const o=el.textContent;try{await navigator.clipboard.writeText(t);el.textContent='Copied'}catch(e){el.textContent=t}setTimeout(()=>el.textContent=o,1600)};
@@ -560,13 +759,11 @@ const V={
   home(){return `<div class="stage" id="stage">
   <div class="tl mono">Main</div>
   <div class="deco" aria-hidden="true">
-    <svg class="deco-c" viewBox="0 0 200 200"><defs><path id="decoC" d="M100,100 m-70,0 a70,70 0 1,1 140,0 a70,70 0 1,1 -140,0"/></defs><text><textPath href="#decoC" textLength="438" lengthAdjust="spacing">YEWON KIM ✦ YEWON KIM ✦ </textPath></text></svg>
+    <svg class="deco-c stamp" viewBox="0 0 200 200"><g transform="rotate(-12 100 100)" filter="url(#ink)"><g fill="none" stroke="currentColor"><circle cx="100" cy="100" r="92" stroke-width="5"/><circle cx="100" cy="100" r="82" stroke-width="1.6"/><circle cx="100" cy="100" r="50" stroke-width="1.6"/></g><defs><path id="decoC" d="M100,100 m-66,0 a66,66 0 1,1 132,0 a66,66 0 1,1 -132,0"/></defs><text class="st-ring"><textPath href="#decoC" textLength="405" lengthAdjust="spacing">YEWON KIM ✦ PORTFOLIO ✦ 2026 ✦ </textPath></text><text class="st-yw" x="100" y="97" text-anchor="middle">YW</text><text class="st-sm" x="100" y="119" text-anchor="middle">SEOUL · KR</text></g></svg>
   </div>
-  <svg class="deco-p" viewBox="0 0 130 130" aria-hidden="true"><g text-anchor="middle">
-    <text x="65" y="14">VISUAL</text>
-    <text x="65" y="14" transform="rotate(90 65 65)">DESIGN</text>
-    <text x="65" y="14" transform="rotate(180 65 65)">CREATIVE</text>
-    <text x="65" y="14" transform="rotate(270 65 65)">MIND</text></g></svg>
+  <svg class="deco-p deco-post" viewBox="0 0 150 180" aria-hidden="true"><defs><mask id="perf"><rect width="150" height="180" fill="#fff"/><g fill="#000"><circle cx="0.0" cy="0" r="5"/><circle cx="0.0" cy="180" r="5"/><circle cx="12.5" cy="0" r="5"/><circle cx="12.5" cy="180" r="5"/><circle cx="25.0" cy="0" r="5"/><circle cx="25.0" cy="180" r="5"/><circle cx="37.5" cy="0" r="5"/><circle cx="37.5" cy="180" r="5"/><circle cx="50.0" cy="0" r="5"/><circle cx="50.0" cy="180" r="5"/><circle cx="62.5" cy="0" r="5"/><circle cx="62.5" cy="180" r="5"/><circle cx="75.0" cy="0" r="5"/><circle cx="75.0" cy="180" r="5"/><circle cx="87.5" cy="0" r="5"/><circle cx="87.5" cy="180" r="5"/><circle cx="100.0" cy="0" r="5"/><circle cx="100.0" cy="180" r="5"/><circle cx="112.5" cy="0" r="5"/><circle cx="112.5" cy="180" r="5"/><circle cx="125.0" cy="0" r="5"/><circle cx="125.0" cy="180" r="5"/><circle cx="137.5" cy="0" r="5"/><circle cx="137.5" cy="180" r="5"/><circle cx="150.0" cy="0" r="5"/><circle cx="150.0" cy="180" r="5"/><circle cx="0" cy="0.0" r="5"/><circle cx="150" cy="0.0" r="5"/><circle cx="0" cy="12.8" r="5"/><circle cx="150" cy="12.8" r="5"/><circle cx="0" cy="25.7" r="5"/><circle cx="150" cy="25.7" r="5"/><circle cx="0" cy="38.5" r="5"/><circle cx="150" cy="38.5" r="5"/><circle cx="0" cy="51.4" r="5"/><circle cx="150" cy="51.4" r="5"/><circle cx="0" cy="64.2" r="5"/><circle cx="150" cy="64.2" r="5"/><circle cx="0" cy="77.1" r="5"/><circle cx="150" cy="77.1" r="5"/><circle cx="0" cy="90.0" r="5"/><circle cx="150" cy="90.0" r="5"/><circle cx="0" cy="102.8" r="5"/><circle cx="150" cy="102.8" r="5"/><circle cx="0" cy="115.6" r="5"/><circle cx="150" cy="115.6" r="5"/><circle cx="0" cy="128.5" r="5"/><circle cx="150" cy="128.5" r="5"/><circle cx="0" cy="141.3" r="5"/><circle cx="150" cy="141.3" r="5"/><circle cx="0" cy="154.2" r="5"/><circle cx="150" cy="154.2" r="5"/><circle cx="0" cy="167.0" r="5"/><circle cx="150" cy="167.0" r="5"/><circle cx="0" cy="179.9" r="5"/><circle cx="150" cy="179.9" r="5"/></g></mask></defs><g transform="rotate(6 75 90)"><g mask="url(#perf)"><rect width="150" height="180" fill="#f7f5ec"/><g filter="url(#ink)"><rect x="14" y="14" width="122" height="152" fill="none" stroke="currentColor" stroke-width="1.5"/><text class="st-yw" x="75" y="97" text-anchor="middle" style="font-size:54px">YW</text><text class="st-sm" x="75" y="122" text-anchor="middle">VISUAL · DESIGN</text><text class="st-sm" x="75" y="136" text-anchor="middle">CREATIVE · MIND</text><text class="st-sm" x="24" y="34" style="font-size:12px">2026</text><text class="st-sm" x="126" y="156" text-anchor="end" style="font-size:11px">KR</text></g></g></g></svg>
+  <div class="deco-tape" aria-hidden="true">VISUAL · DESIGN<br>CREATIVE · MIND</div>
+  <svg class="deco-label" viewBox="0 0 210 120" aria-hidden="true"><g filter="url(#ink)"><g fill="none" stroke="currentColor"><rect x="3" y="3" width="204" height="114" stroke-width="2.4"/><line x1="3" y1="36" x2="207" y2="36" stroke-width="1.4"/><line x1="70" y1="36" x2="70" y2="117" stroke-width="1.4"/></g><text class="st-sm" x="12" y="25" style="font-size:12px;letter-spacing:1.5px">ARCHIVE — YEWON KIM</text><text class="st-sm" x="14" y="58" style="font-size:9px">NO.</text><text class="st-yw" id="decoNo" x="12" y="100" style="font-size:38px">01</text><text class="st-sm" x="80" y="58" style="font-size:11px">VISUAL</text><text class="st-sm" x="80" y="76" style="font-size:11px">DESIGN</text><text class="st-sm" x="80" y="94" style="font-size:11px">CREATIVE</text><text class="st-sm" x="80" y="111" style="font-size:11px">MIND</text></g></svg>
   <div class="tr links mono" onpointerdown="event.stopPropagation()">${PROFILE.links.map(l=>l.mail?`<button onclick="MAIL('${l.mail}')">${l.label}</button>`:l.copy?`<button onclick="COPY('${l.copy}',this)">${l.label}</button>`:`<a href="${l.href}"${l.href.startsWith('mailto:')?'':' target="_blank" rel="noopener"'}>${l.label}</a>`).join('')}</div>
   ${SECTIONS.map((x,i)=>`<div class="it" data-i="${i}"><div class="sl">${x.label}</div><div class="card">${collage(x)}</div></div>`).join('')}
   <div class="ttls">${SECTIONS.map(x=>`<div class="tt"><span>${x.t}</span></div>`).join('')}</div><div class="grain"></div>
@@ -659,7 +856,7 @@ function initStage(){
       const b=o>.02&&d>.02?`blur(${(d*7).toFixed(1)}px)`:'none';if(t._b!==b){t._b=b;t.style.filter=b}});
     paintRuler(rul,clamp(pos));
     const c=Math.round(clamp(pos));
-    if(c!==shown){shown=c;cur.innerHTML=SECTIONS[c].label}
+    if(c!==shown){shown=c;cur.innerHTML=SECTIONS[c].label;const dn=document.getElementById('decoNo');if(dn)dn.textContent=SECTIONS[c].n}
   }
   (function tick(){
     if(!document.body.contains(st))return;
