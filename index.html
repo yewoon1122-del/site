@@ -654,6 +654,12 @@ body.home .deco{color:#82a600}                           /* 인덱스 도장 = �
   background-image:linear-gradient(rgba(255,255,255,.7),rgba(255,255,255,.7)),linear-gradient(rgba(255,255,255,.61),rgba(255,255,255,.61)),url("images/paper.jpg");
   background-size:auto,auto,600px auto;background-blend-mode:normal,normal,multiply;
   clip-path:polygon(2% 0,6% 6%,10% 0,98% 3%,100% 50%,97% 100%,92% 94%,88% 100%,0 97%,3% 50%)}
+
+/* ---- 오른쪽 하단 우표·라벨: 누런 기 빼고 무채색 ---- */
+.deco-post rect[fill="#f7f5ec"]{fill:#f4f4f3}
+.deco-label rect:first-of-type{fill:#f4f4f3!important}
+.deco-p.deco-post{filter:drop-shadow(0 3px 4px rgba(0,0,0,.2))!important}
+.deco-label{filter:drop-shadow(0 3px 5px rgba(0,0,0,.22))!important}
 </style>
 </head>
 <body>
