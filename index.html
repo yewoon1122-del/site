@@ -641,6 +641,19 @@ body.home .deco{color:#82a600}                           /* 인덱스 도장 = �
 .rs-lv li i:after{background:#86a800}
 .rs-lv li b{font-size:16px;color:#6e8c00}
 @media(max-width:700px){.rs-lv{gap:11px}.rs-lv li{grid-template-columns:104px 1fr 40px;gap:10px;font-size:15px}.rs-lv li i{height:8px}.rs-lv li b{font-size:12px}}
+
+/* ---- 상단바: 화이트 10% + 블러 제거(종이 질감 비치게) + 그림자 ---- */
+.dock, body.home .dock{background:rgba(255,255,255,.1)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+  box-shadow:0 0 0 1px var(--line),0 3px 8px rgba(0,0,0,.16),0 1px 3px rgba(0,0,0,.12)!important}
+
+/* ---- 포스트잇: 그림자(drop-shadow) + 종이색·질감(살짝 밝게), 불투명도 95% ---- */
+.deco-tape{clip-path:none!important;background:transparent!important;box-shadow:none!important;
+  filter:drop-shadow(0 3px 4px rgba(0,0,0,.16)) drop-shadow(0 1px 1.5px rgba(0,0,0,.12))}
+.deco-tape::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.95;
+  background-color:#f4f4f2;
+  background-image:linear-gradient(rgba(255,255,255,.7),rgba(255,255,255,.7)),linear-gradient(rgba(255,255,255,.61),rgba(255,255,255,.61)),url("images/paper.jpg");
+  background-size:auto,auto,600px auto;background-blend-mode:normal,normal,multiply;
+  clip-path:polygon(2% 0,6% 6%,10% 0,98% 3%,100% 50%,97% 100%,92% 94%,88% 100%,0 97%,3% 50%)}
 </style>
 </head>
 <body>
