@@ -924,7 +924,7 @@ const V={
   ${bannerBottom()}`},
   insta(){return head('insta')+dynGrid('instagram',20,'ar-ig')+PROJ+`${blkOf('insta',`${wsw(['instagram/project/1_a','instagram/project/1_b'])}`,'비주얼 가이드라인 적용 후 리뉴얼 피드 (AFTER) → 기존 인스타그램 피드 (BEFORE)')}${blkOf('iguide',`${wsw(MN('instagram/project',5,'menual',2),'bd')}`)}`},
   pop(){return head('pop')+`<div class="grid narrow nat">${DATA.pop.map(o=>`<button class="card" onclick="OPENS('${o.src}','${o.label}')">${im(o.src,o.label)}</button>`).join('')}</div>`},
-  ai(){return head('ai')+`<h2 style="margin-top:0">WOMEN</h2>`+dynGrid('ai/WOMEN',6,'ar-th',[],true)+`<h2>26FW</h2>`+dynGrid('ai/26FW',24,'ar-th')+`<h2>26SS</h2>`+dynGrid('ai/26SS',24,'ar-th',[],true)+`<h2>Video</h2>`+videoGrid('ai/video',6)},
+  ai(){return head('ai')+`<h2 style="margin-top:0">WOMEN</h2>`+dynGrid('ai/WOMEN',9,'ar-th',[],true)+`<h2>26FW</h2>`+dynGrid('ai/26FW',24,'ar-th')+`<h2>26SS</h2>`+dynGrid('ai/26SS',24,'ar-th',[],true)+`<h2>Video</h2>`+videoGrid('ai/video',6)},
   resume(){const R=RES,it=(a,n)=>a.map((x,i)=>`<div class="rs-it"><span class="rs-n">${n?n2(i+1):''}</span><div><h4>${x[0]}</h4>${Array.isArray(x[1])?`<ul class="rs-lv">${x[1].map(([t,p])=>`<li><span>${t}</span><i style="--p:${p}%"></i><b>${p}%</b></li>`).join('')}</ul>`:`<p>${x[1]}</p>`}</div></div>`).join('');
   return `${head('resume')}<div class="rs">
   <section class="rs-sec"><h2 class="pk">ABOUT</h2><div><p class="rs-sub">${R.about.sub}</p><p class="rs-head">${R.about.head}</p><p class="rs-lead">${R.about.lead}</p>${R.about.p.map(t=>`<p class="rs-p">${t}</p>`).join('')}</div></section>
