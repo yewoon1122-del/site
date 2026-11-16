@@ -525,7 +525,7 @@ svg text.st-sm{font:700 10px 'Courier New',monospace;letter-spacing:1.5px}
 /* ===================================================================
    하위 페이지 도장: PC에서도 오른쪽 위에 표시 + RESUME 올리브 색
    =================================================================== */
-body:not(.home) .deco-fx{color:#8fa60c}                       /* RESUME 타이틀과 같은 올리브 */
+body:not(.home) .deco-fx{color:#4a4a48}                       /* RESUME 타이틀과 같은 올리브 */
 @media(min-width:701px) and (max-width:1499px){
  body:not(.home) .deco-fx{display:block;position:fixed;z-index:35;pointer-events:none;width:104px;height:104px;top:36px;right:36px}
  body:not(.home) .deco-fx .deco-c{width:100%;height:100%}
@@ -617,12 +617,12 @@ html body.home{--card:#e8e7e3!important;--slide:#e8e7e3!important}   /* 인덱�
 
 /* ---- 타이틀 색 ---- */
 :root:root:root:root, html body, html body .lb, html body.home{
-  --title-1:#728f00!important;--title-2:#5d7600!important}   /* 기본 타이틀 올리브 */
-html body.home{--title-1:#82a600!important;--title-2:#698900!important}  /* 인덱스 타이틀: 이전(#728f00)과 #92be00 중간 */
-.pk{--title-1:#86a800!important;--title-2:#6e8c00!important}  /* RESUME 타이틀: 조금 더 쨍한 올리브 */
+  --title-1:#4a4a48!important;--title-2:#3a3a38!important}   /* 기본 타이틀: 진그레이 */
+html body.home{--title-1:#4a4a48!important;--title-2:#3a3a38!important}  /* 인덱스 타이틀: 진그레이 */
+.pk{--title-1:#4a4a48!important;--title-2:#3a3a38!important}  /* RESUME 타이틀: 진그레이 */
 
 /* ---- 인덱스 도장: 올리브 + 80% ---- */
-body.home .deco{color:#82a600}                           /* 인덱스 도장 = 인덱스 타이틀 색 */
+body.home .deco{color:#4a4a48}                           /* 인덱스 도장 = 인덱스 타이틀 색 (진그레이) */
 .deco .deco-c, body.home .deco-c.stamp{opacity:.8!important}
 
 /* ---- RESUME ABOUT: EXPERIENCE와 같은 크기·색 ---- */
@@ -640,8 +640,8 @@ body.home .deco{color:#82a600}                           /* 인덱스 도장 = �
 .rs-lv{gap:16px;max-width:780px;margin-top:12px}
 .rs-lv li{grid-template-columns:180px 1fr 60px;gap:20px;font-size:20px}
 .rs-lv li i{height:11px}
-.rs-lv li i:after{background:#86a800}
-.rs-lv li b{font-size:16px;color:#6e8c00}
+.rs-lv li i:after{background:#4a4a48}
+.rs-lv li b{font-size:16px;color:#3a3a38}
 @media(max-width:700px){.rs-lv{gap:11px}.rs-lv li{grid-template-columns:104px 1fr 40px;gap:10px;font-size:15px}.rs-lv li i{height:8px}.rs-lv li b{font-size:12px}}
 
 /* ---- 상단바: 화이트 10% + 블러 제거(종이 질감 비치게) + 그림자 ---- */
