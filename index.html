@@ -699,13 +699,13 @@ const PROFILE={
 const CATS=['남성 캐쥬얼','여성 캐쥬얼','여성','여성 가방','스노우','워크웨어','스포츠'];
 const mk=(n,f)=>Array.from({length:n},(_,i)=>f(i));
 const n2=n=>String(n).padStart(2,'0'),I=p=>'images/'+p;
-const NOSW=['women2'];   /* 보정본(swipe) 아직 없는 카테고리 — swipe 올리면 여기서 빼기 */
+const NOSW=[];   /* 보정본(swipe) 아직 없는 카테고리 — swipe 올리면 여기서 빼기 */
 const KEYS=['men','women','women2','bag','snow','workwear','sports'];
 const NM={'men-1':'코듀로이 플리스 후드 집업','men-2':'웨이브 롱슬리브','women-1':'우먼스 셔닐 후드 집업','women-2':'우먼스 크라운 후드 롱슬리브'};
 const L=(dir,files,label)=>files.map((f,i)=>({src:I(dir+'/'+f),label:label+' '+n2(i+1)}));
 const BD=[{"t": "01.gif", "d": "01_detail.jpg"}, {"t": "02.gif", "d": "02_detail.jpg"}, {"t": "03.jpg", "d": "03_detail.jpg"}, {"t": "04.gif", "d": "04_detail.jpg"}, {"t": "05.jpg", "d": "05_detail.jpg"}, {"t": "06.jpg", "d": "06_detail.jpg"}, {"t": "07.jpg", "d": "07_detail.jpg"}, {"t": "08.jpg", "d": "08_detail.jpg"}, {"t": "09.jpg", "d": "09_detail.jpg"}];
 const DATA={
-  detail:CATS.map((c,ci)=>({name:c,items:mk(2,i=>{const NN='0'+(i+1),k=KEYS[ci]+'-'+(i+1),b=`detail/${KEYS[ci]}/detail/${NN}/`;return {thumb:I(b+'S_0.jpg'),detail:I(b),nn:NN,label:NM[k]||(c+' '+(i+1))}}),retouch:NOSW.includes(KEYS[ci])?[]:mk(2,i=>{const b=`detail/${KEYS[ci]}/swipe/${KEYS[ci]==='bag'?'':'0'}${i+1}_`;const b2=b.replace('/swipe/','/detail/swipe/');return {after:I(b+'a.jpg'),before:I(b+'b.jpg'),afterFb:I(b2+'a.jpg'),beforeFb:I(b2+'b.jpg'),label:c+' '+(i+1)}})})),
+  detail:CATS.map((c,ci)=>({name:c,items:mk(2,i=>{const NN='0'+(i+1),k=KEYS[ci]+'-'+(i+1),b=`detail/${KEYS[ci]}/detail/${NN}/`;return {thumb:I(b+'S_0.jpg'),detail:I(b),nn:NN,label:NM[k]||(c+' '+(i+1))}}),retouch:NOSW.includes(KEYS[ci])?[]:mk(2,i=>{const b=`detail/${KEYS[ci]}/swipe/${['bag','women2'].includes(KEYS[ci])?'':'0'}${i+1}_`;const b2=b.replace('/swipe/','/detail/swipe/');return {after:I(b+'a.jpg'),before:I(b+'b.jpg'),afterFb:I(b2+'a.jpg'),beforeFb:I(b2+'b.jpg'),label:c+' '+(i+1)}})})),
   bannerDetail:BD.map((b,i)=>({src:I('banner/detail/'+b.t),detail:I('banner/detail/'+b.d),label:'Banner '+n2(i+1)})),
   bannerPlain:L('banner/none',["01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg", "06.jpg", "07.jpg", "08.jpg", "09.jpg", "10.gif", "11.jpg", "12.jpg"],'Banner'),
   bannerSeries:L('banner/series',["01.jpg", "02.jpg", "03.jpg"],'Series'),
